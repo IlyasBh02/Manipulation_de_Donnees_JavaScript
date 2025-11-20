@@ -32,11 +32,11 @@ fetch("data.json")
     // console.log('7. Bookings by status:', groupBookingsByStatus());
     console.log('8. Most expensive trip:', findMostExpensiveBooking());
     console.log('9. Booking summaries:', getBookingSummary());
-    // console.log('10. Update booking:', updateBookingStatus('BK001', 'cancelled'));
+    console.log('10. Update booking:', updateBookingStatus('BK001', 'cancelled'));
     
     // console.log('\nLEVEL 3:');
-    // console.log('11. Money per destination:', calculateRevenueByDestination());
-    // console.log('12. Most bookings by:', findUserWithMostBookings());
+    console.log('11. Money per destination:', calculateRevenueByDestination());
+    console.log('12. Most bookings by:', findUserWithMostBookings());
     // console.log('13. March bookings:', filterBookingsByDate('2024-03-01', '2024-04-01'));
     // console.log('14. All passenger names:', getAllPassengerNames());
   })
@@ -125,16 +125,24 @@ function countTotalPassengers() {
     
 }
 
+
+// ########################################################################################################
+
 // CHALLENGE 7: Group bookings by their status (confirmed, pending, etc.)
 // NO RESTRICTION You are encouraged to use map, filter, reduce, and Object.keys/Object.values/Object.entries where appropriate.
-function groupBookingsByStatus() {
+
+// function groupBookingsByStatus() {
     // We want an object that looks like:
     // {
     //   confirmed: [booking1, booking2...],
     //   pending: [booking3...]
     // }
    
-}
+// }
+// #######################################################################################################
+
+
+
 
 // CHALLENGE 8: Find the most expensive booking
 // RESTRICTION use Only for, while, and standard logic.
@@ -171,7 +179,13 @@ function getBookingSummary() {
 // RESTRICTION use Only for, while, and standard logic.
 function updateBookingStatus(bookingId, newStatus) {
     
-    
+     for (let i = 0; i < spaceData.bookings.length; i++) {
+        if (spaceData.bookings[i].id === bookingId) {
+            spaceData.bookings[i].status = newStatus;
+            return spaceData.bookings[i];
+        }
+    }
+    return null;
 }
 
 
@@ -180,14 +194,25 @@ function updateBookingStatus(bookingId, newStatus) {
 function calculateRevenueByDestination() {
     // We want an object that shows total revenue for each destination:
     // { 'Moon Base Alpha': 195000, 'Mars Colony One': 250000 }
-   
-
+    let revenue = {};
+    for (let i = 0; i < spaceData.bookings.length; i++) {
+        let Bk = spaceData.bookings[i];
+        if (!revenue[Bk.destination]) revenue[Bk.destination] = 0;
+        revenue[Bk.destination] += Bk.totalPrice;
+    }
+    return revenue;
 }
 
 // CHALLENGE 12: Find which user has made the most bookings
 // NO RESTRICTION You are encouraged to use map, filter, reduce, and Object.keys/Object.values/Object.entries where appropriate.
 function findUserWithMostBookings() {
-  
+    let MAX_user = null;
+    for (let i = 0; i < spaceData.users.length; i++) {
+        if (!MAX_user || spaceData.users[i].totalBookings > MAX_user.totalBookings) {
+            MAX_user = spaceData.users[i];
+        }
+    }
+    return MAX_user;
 
 }
 
