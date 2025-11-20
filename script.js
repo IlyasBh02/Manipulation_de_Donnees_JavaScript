@@ -1,58 +1,127 @@
 let spaceData = {};
 
-async function loadData() {
-    try {
-        const response = await fetch('data.json');
-        spaceData = await response.json();
-        console.log('Awesome! Data loaded successfully!');
-        return spaceData;
-    } catch (error) {
-        console.log('Oops! Something went wrong loading the data:', error);
-    }
-}
+// async function loadData() {
+//     try {
+//         const response = await fetch('data.json');
+//         spaceData = await response.json();
+//         console.log('Awesome! Data loaded successfully!');
+//         return spaceData;
+//     } catch (error) {
+//         console.log('Oops! Something went wrong loading the data:', error);
+//     }
+// }
+
+fetch("data.json")
+  .then(function(response) {
+      return response.json();
+  })
+  .then(function(data) {
+      spaceData = data; 
+      console.log("Data add:", spaceData);
 
 
-loadData();
+    // console.log('LEVEL 1:');
+    console.log('1. How many destinations?', countTotalDestinations());
+    console.log('2. Available destinations:', getAvailableDestinations());
+    console.log('3. First booking ever:', getFirstBooking());
+    console.log('4. Total money made:', calculateTotalRevenue());
+    console.log('5. Find John Smith:', findUserByEmail('john.smith@email.com'));
+    
+    // console.log('\nLEVEL 2:');
+    console.log('6. Total passengers:', countTotalPassengers());
+    // console.log('7. Bookings by status:', groupBookingsByStatus());
+    // console.log('8. Most expensive trip:', findMostExpensiveBooking());
+    // console.log('9. Booking summaries:', getBookingSummary());
+    // console.log('10. Update booking:', updateBookingStatus('BK001', 'cancelled'));
+    
+    // console.log('\nLEVEL 3:');
+    // console.log('11. Money per destination:', calculateRevenueByDestination());
+    // console.log('12. Most bookings by:', findUserWithMostBookings());
+    // console.log('13. March bookings:', filterBookingsByDate('2024-03-01', '2024-04-01'));
+    // console.log('14. All passenger names:', getAllPassengerNames());
+  })
+  
+
+// fetch("data.json").then(function(response) {}
+fetch("data.json")
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(data) {
+    console.log(data);
+  })
 
 
 
 // CHALLENGE 1: Count how many destinations we have
 // RESTRICTION use Only for, while, and standard logic.
 function countTotalDestinations() {
-   
+   let count = 0;
+    for (let i = 0; i < spaceData.destinations.length; i++) {
+        count ++;
+    }
+    // console.log(count);
+    return count;
     
 }
+
 
 // CHALLENGE 2: Find destinations that are available for booking
 // NO RESTRICTION You are encouraged to use map, filter, reduce, and Object.keys/Object.values/Object.entries where appropriate.
 function getAvailableDestinations() {
-
+    return spaceData.destinations.filter(function(dest){
+        console.log(dest);
+        return dest.available === true;
+    });
 }
+
 
 // CHALLENGE 3: Get the very first booking in our system
 // RESTRICTION use Only for, while, and standard logic.
 function getFirstBooking() {
-
+    let firstBK = null;
+    for (let i = 0; i < spaceData.bookings.length; i++) {
+        if (firstBK === null) {
+            firstBK = spaceData.bookings[i];
+        }
+    }
+    // console.log(helloooooooooo);
+    return firstBK;
 }
+
+
 
 // CHALLENGE 4: Calculate how much money we've made from all bookings
 // NO RESTRICTION You are encouraged to use map, filter, reduce, and Object.keys/Object.values/Object.entries where appropriate.
 function calculateTotalRevenue() {
-
-
+    let total = 0;
+    for (let i = 0; i < spaceData.bookings.length; i++) {
+        total += spaceData.bookings[i].totalPrice;
+    }
+    return total;
 }
+
 
 // CHALLENGE 5: Find a user by their email address
 // RESTRICTION use Only for, while, and standard logic.
 function findUserByEmail(email) {
-   
+   for (let i = 0; i < spaceData.users.length; i++) {
+        if (spaceData.users[i].email === email) {
+            return spaceData.users[i];
+        }
+    }
+    return null;
     
 }
 
 // CHALLENGE 6: Count all passengers across every booking
 // RESTRICTION use Only for, while, and standard logic.
 function countTotalPassengers() {
-   
+   let total = 0;
+    for (let i = 0; i < spaceData.bookings.length; i++) {
+        total += spaceData.bookings[i].passengers.length;
+    }
+    return total;
     
 }
 
