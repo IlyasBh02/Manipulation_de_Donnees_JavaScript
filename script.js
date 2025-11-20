@@ -37,8 +37,8 @@ fetch("data.json")
     // console.log('\nLEVEL 3:');
     console.log('11. Money per destination:', calculateRevenueByDestination());
     console.log('12. Most bookings by:', findUserWithMostBookings());
-    // console.log('13. March bookings:', filterBookingsByDate('2024-03-01', '2024-04-01'));
-    // console.log('14. All passenger names:', getAllPassengerNames());
+    console.log('13. March bookings:', filterBookingsByDate('2024-03-01', '2024-04-01'));
+    console.log('14. All passenger names:', getAllPassengerNames());
   })
   
 
@@ -226,7 +226,13 @@ function filterBookingsByDate(startDate, endDate) {
 // CHALLENGE 14: Get a list of all passenger names from all bookings
 // NO RESTRICTION You are encouraged to use map, filter, reduce, and Object.keys/Object.values/Object.entries where appropriate.
 function getAllPassengerNames() {
-   
+   let names = [];
+    for (let i = 0; i < spaceData.bookings.length; i++) {
+        for (let j = 0; j < spaceData.bookings[i].passengers.length; j++) {
+            names.push(spaceData.bookings[i].passengers[j].name);
+        }
+    }
+    return names;
     
 }
 
