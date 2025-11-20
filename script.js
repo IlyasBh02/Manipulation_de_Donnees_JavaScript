@@ -30,8 +30,8 @@ fetch("data.json")
     // console.log('\nLEVEL 2:');
     console.log('6. Total passengers:', countTotalPassengers());
     // console.log('7. Bookings by status:', groupBookingsByStatus());
-    // console.log('8. Most expensive trip:', findMostExpensiveBooking());
-    // console.log('9. Booking summaries:', getBookingSummary());
+    console.log('8. Most expensive trip:', findMostExpensiveBooking());
+    console.log('9. Booking summaries:', getBookingSummary());
     // console.log('10. Update booking:', updateBookingStatus('BK001', 'cancelled'));
     
     // console.log('\nLEVEL 3:');
@@ -139,7 +139,13 @@ function groupBookingsByStatus() {
 // CHALLENGE 8: Find the most expensive booking
 // RESTRICTION use Only for, while, and standard logic.
 function findMostExpensiveBooking() {
-    
+    let maxBooking = null;
+    for (let i = 0; i < spaceData.bookings.length; i++) {
+        if (!maxBooking || spaceData.bookings[i].totalPrice >= maxBooking.totalPrice) {
+            maxBooking = spaceData.bookings[i];
+        }
+    }
+    return maxBooking;    
 
 }
 
@@ -148,7 +154,17 @@ function findMostExpensiveBooking() {
 function getBookingSummary() {
     // We want to make each booking simpler - just show:
     // id, destination, number of passengers, and total price
-    
+        let summary = [];
+        for (let i = 0; i < spaceData.bookings.length; i++) {
+        let BK = spaceData.bookings[i];
+        summary.push({
+            id: BK.id,
+            destination: BK.destination,
+            passengers: BK.passengers.length,
+            totalPrice: BK.totalPrice
+        });
+    }
+    return summary;
 }
 
 // CHALLENGE 10: Update a booking's status
@@ -201,54 +217,54 @@ function addNewBooking(bookingData) {
 // ========================
 
 
-async function testAllChallenges() {
+// async function testAllChallenges() {
  
-    await loadData();
+//     await loadData();
     
-    console.log('TESTing !\n');
+//     console.log('TESTing !\n');
     
-    console.log('LEVEL 1:');
-    console.log('1. How many destinations?', countTotalDestinations());
-    console.log('2. Available destinations:', getAvailableDestinations());
-    console.log('3. First booking ever:', getFirstBooking());
-    console.log('4. Total money made:', calculateTotalRevenue());
-    console.log('5. Find John Smith:', findUserByEmail('john.smith@email.com'));
+//     console.log('LEVEL 1:');
+//     console.log('1. How many destinations?', countTotalDestinations());
+//     console.log('2. Available destinations:', getAvailableDestinations());
+//     console.log('3. First booking ever:', getFirstBooking());
+//     console.log('4. Total money made:', calculateTotalRevenue());
+//     console.log('5. Find John Smith:', findUserByEmail('john.smith@email.com'));
     
-    console.log('\nLEVEL 2:');
-    console.log('6. Total passengers:', countTotalPassengers());
-    console.log('7. Bookings by status:', groupBookingsByStatus());
-    console.log('8. Most expensive trip:', findMostExpensiveBooking());
-    console.log('9. Booking summaries:', getBookingSummary());
-    console.log('10. Update booking:', updateBookingStatus('BK001', 'cancelled'));
+//     console.log('\nLEVEL 2:');
+//     console.log('6. Total passengers:', countTotalPassengers());
+//     console.log('7. Bookings by status:', groupBookingsByStatus());
+//     console.log('8. Most expensive trip:', findMostExpensiveBooking());
+//     console.log('9. Booking summaries:', getBookingSummary());
+//     console.log('10. Update booking:', updateBookingStatus('BK001', 'cancelled'));
     
-    console.log('\nLEVEL 3:');
-    console.log('11. Money per destination:', calculateRevenueByDestination());
-    console.log('12. Most bookings by:', findUserWithMostBookings());
-    console.log('13. March bookings:', filterBookingsByDate('2024-03-01', '2024-04-01'));
-    console.log('14. All passenger names:', getAllPassengerNames());
+//     console.log('\nLEVEL 3:');
+//     console.log('11. Money per destination:', calculateRevenueByDestination());
+//     console.log('12. Most bookings by:', findUserWithMostBookings());
+//     console.log('13. March bookings:', filterBookingsByDate('2024-03-01', '2024-04-01'));
+//     console.log('14. All passenger names:', getAllPassengerNames());
     
     // Try adding a new booking
-    try {
-        const newBooking = {
-            userId: 'user456',
-            destinationId: 2,
-            destination: 'Mars Colony One',
-            package: 'basic',
-            passengers: [{ name: 'Bob Wilson', age: 45 }],
-            travelDate: '2024-07-01',
-            returnDate: '2024-07-03',
-            totalPrice: 250000,
-            status: 'pending'
-        };
-        console.log('15. Add new booking:', addNewBooking(newBooking));
-    } catch (error) {
-        console.log('15. Failed to add booking:', error.message);
-    }
-}
+//     try {
+//         const newBooking = {
+//             userId: 'user456',
+//             destinationId: 2,
+//             destination: 'Mars Colony One',
+//             package: 'basic',
+//             passengers: [{ name: 'Bob Wilson', age: 45 }],
+//             travelDate: '2024-07-01',
+//             returnDate: '2024-07-03',
+//             totalPrice: 250000,
+//             status: 'pending'
+//         };
+//         console.log('15. Add new booking:', addNewBooking(newBooking));
+//     } catch (error) {
+//         console.log('15. Failed to add booking:', error.message);
+//     }
+// }
 
 
-window.testAllChallenges = testAllChallenges;
-window.spaceData = spaceData;
+// window.testAllChallenges = testAllChallenges;
+// window.spaceData = spaceData;
 
 // Some tips for success:
 // 1. Start with the easy challenges first
@@ -257,4 +273,4 @@ window.spaceData = spaceData;
 // 4. Test each function as you complete it
 // 5. Don't worry if it takes time - learning is a process!
 
-console.log('Pro tip: Open browser console and type testAllChallenges() to check your work!');
+// console.log('Pro tip: Open browser console and type testAllChallenges() to check your work!');
